@@ -1,0 +1,57 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "This file is @generated automatically"
+    ],
+    "hash": "0238672c12ce25529752874490967410",
+    "packages": [
+        {
+            "name": "baglerit/oauthsimple",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/BaglerIT/OAuthSimple.git",
+                "reference": "c4aaee8360cb2fbcd0c5e6ee04041f12bc3aab51"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/BaglerIT/OAuthSimple/zipball/c4aaee8360cb2fbcd0c5e6ee04041f12bc3aab51",
+                "reference": "c4aaee8360cb2fbcd0c5e6ee04041f12bc3aab51",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "BaglerIT\\OAuthSimple\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD"
+            ],
+            "authors": [
+                {
+                    "name": "Dave Bagler",
+                    "email": "dave@baglerit.com"
+                },
+                {
+                    "name": "JR Colin",
+                    "email": "jrconlin@jrconlin.com"
+                }
+            ],
+            "description": "Composer package for the PHP version of the OAuthSimple Class by @jrconlin",
+            "time": "2015-08-05 06:59:54"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": {
+        "baglerit/oauthsimple": 20
+    },
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": []
+}

@@ -1,0 +1,19 @@
+{
+    "name": "bgsu-lits/learning-tools",
+    "description": "Learning Tools Interoperability (LTI) library for PHP.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "John Kloor",
+            "email": "kloor@bgsu.edu"
+        }
+    ],
+    "require": {
+        "baglerit/oauthsimple": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "BGSULITS\\LearningTools\\": "src/"
+        }
+    }
+}
