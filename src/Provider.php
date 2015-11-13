@@ -310,16 +310,15 @@ class Provider
         }
 
         // Store the resultDescription if found in the XML document.
-        $description = $root
+        $info = $root
             ->imsx_POXHeader
             ->imsx_POXResponseHeaderInfo
-            ->imsx_statusInfo
-            ->imsx_description;
+            ->imsx_statusInfo;
 
         $this->resultDescription = '';
 
-        if ($description) {
-            $this->resultDescription = (string) $description;
+        if ($info->imsx_description) {
+            $this->resultDescription = (string) $info->imsx_description;
         }
 
         // Store the resultScore if found in the XML document.
