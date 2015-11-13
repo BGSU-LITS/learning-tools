@@ -51,8 +51,7 @@ class Provider
      * Verify the OAuth1 signature of a request.
      * @param string $url URL of the request.
      * @param string $action Action of the requet, i.e. "POST" or "GET".
-     * @param array $parameters Parameters of the request typically from a
-     *     superglobal, i.e. $_POST or $_GET.
+     * @param array $parameters Parameters of the request.
      * @return bool True if the signature was verified. Otherwise false.
      * @throws ProviderConfigException Signature to verify could not be found.
      */
@@ -87,24 +86,26 @@ class Provider
         // Begin building the URL with the protocol.
         $url = 'http://';
 
-        if (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on') {
+        if (filter_input(INPUT_SERVER, 'HTTPS', FILTER_VALIDATE_BOOLEAN)) {
             $url = 'https://';
         }
 
         // Add server name to the URL.
-        $url .= $_SERVER['SERVER_NAME'];
+        $url .= filter_input(INPUT_SERVER, 'SERVER_NAME', FILTER_SANITIZE_URL);
 
         // Add the port to the URL if it isn't the standard HTTP/HTTPS port.
         // This is impercise to accommodate HTTP servers behind HTTPS proxies.
-        if (!in_array($_SERVER['SERVER_PORT'], [80, 443])) {
-            $url .= ':'. $_SERVER['SERVER_PORT'];
+        $port = filter_input(INPUT_SERVER, 'SERVER_PORT', FILTER_VALIDATE_INT);
+
+        if (!in_array($port, [80, 443])) {
+            $url .= ':'. $port;
         }
 
         // Add the requested path to the URL.
-        $url .= $_SERVER['REQUEST_URI'];
+        $url .= filter_input(INPUT_SERVER, 'REQUEST_URI', FILTER_SANITIZE_URL);
 
-        // Verify the data in the POST superglobal for the URL created.
-        return $this->verify($url, 'POST', $_POST);
+        // Verify the data in POST for the URL created.
+        return $this->verify($url, 'POST', filter_input_array(INPUT_POST));
     }
 
     /**
@@ -222,8 +223,7 @@ class Provider
      * @param array $parameters An array of parameters that must contain an
      *     item keyed "lis_outcome_service_url" that provides the URL of the
      *     outcome service, and an item keyed "lis_result_sourcedid" that
-     *     contains the SourcedID the result request is for. Typically the POST
-     *     superglobal is specified.
+     *     contains the SourcedID the result request is for.
      * @param string $action The action to apply:
      *     "read" to get the SourcedID's current score, the default.
      *     "replace" to set the SourcedID's score.
@@ -351,7 +351,7 @@ class Provider
      */
     public function sendResultRead()
     {
-        return $this->sendResult($_POST, 'read');
+        return $this->sendResult(filter_input_array(INPUT_POST), 'read');
     }
 
     /**
@@ -370,7 +370,11 @@ class Provider
      */
     public function sendResultReplace($score)
     {
-        return $this->sendResult($_POST, 'replace', $score);
+        return $this->sendResult(
+            filter_input_array(INPUT_POST),
+            'replace',
+            $score
+        );
     }
 
     /**
@@ -383,6 +387,6 @@ class Provider
      */
     public function sendResultDelete()
     {
-        return $this->sendResult($_POST, 'delete');
+        return $this->sendResult(filter_input_array(INPUT_POST), 'delete');
     }
 }
